@@ -19,13 +19,13 @@ output "rancher_admin_token" {
   sensitive   = true
 }
 
-output "kubeconfig" {
-  description = "kubectl config file contents for this EKS cluster."
-  value       = module.eks.kubeconfig
-  sensitive   = true
-}
+# output "kubeconfig" {
+#   description = "kubectl config file contents for this EKS cluster."
+#   value       = module.eks.kubeconfig
+#   sensitive   = true
+# }
 
-output "kubeconfig_filename" {
-  description = "The filename of the generated kubectl config."
-  value       = module.eks.kubeconfig_filename
-}
+# output "kubeconfig_filename" {
+#   description = "The filename of the generated kubectl config."
+#   value       = module.eks.kubeconfig_filename
+# }

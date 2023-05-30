@@ -27,7 +27,7 @@ resource "aws_route53_record" "rancher_cluster_ingress" {
   zone_id    = data.aws_route53_zone.dns_zone.zone_id
   name       = local.full_domain
   type       = "CNAME"
-  records    = [data.kubernetes_service.ingress_nginx_service.load_balancer_ingress.0.hostname]
+  records    = [data.kubernetes_service.ingress_nginx_service.status.0.load_balancer.0.ingress.0.hostname]
   ttl        = 300
 }
 

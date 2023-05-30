@@ -6,7 +6,8 @@ terraform {
   # }
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
+      version = "4.67.0"
     }
     helm = {
       source = "hashicorp/helm"
@@ -22,9 +23,6 @@ terraform {
     }
     random = {
       source = "hashicorp/random"
-    }
-    template = {
-      source = "hashicorp/template"
     }
     time = {
       source = "hashicorp/time"
@@ -42,13 +40,18 @@ provider "aws" {
 
 provider "helm" {
   kubernetes {
-    config_path = module.eks.kubeconfig_filename
+    host                   = data.aws_eks_cluster.cluster.endpoint
+    token                  = data.aws_eks_cluster_auth.cluster.token
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   }
 }
 
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  ignore_annotations = [
+    # Ignore *.cattle.io/* annotations, they are populated by Rancher
+    ".*\\.?cattle\\.io\\/.*",
+  ]
 }

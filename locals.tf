@@ -11,4 +11,7 @@ locals {
   name         = local.cluster_name
   subdomain    = local.cluster_name
   full_domain  = "${local.subdomain}.${var.base_domain}"
+  tags = {
+    "managed_by" : "Terraform"
+  }
 }

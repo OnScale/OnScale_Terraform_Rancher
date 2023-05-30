@@ -3,3 +3,4 @@
 **/terraform.tfvars*
 **/kubeconfig*
 **/terraform.tfstate*
+!.terraform.lock.hcl

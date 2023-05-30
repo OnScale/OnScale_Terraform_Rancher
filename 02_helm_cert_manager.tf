@@ -6,14 +6,14 @@ resource "kubernetes_namespace" "cert_manager" {
       "certmanager.k8s.io/disable-validation" = "true"
     }
   }
-  # This destory provisioner is needed since Rancher adds "finalizers" to this namespace, which 
+  # This destory provisioner is needed since Rancher adds "finalizers" to this namespace, which
   # upsets the terraform removal process since Rancher has already been removed.
   provisioner "local-exec" {
     when        = destroy
     command     = "KUBECONFIG=$(find . -type f -name 'kubeconfig_*' | head -n1) kubectl patch ns cert-manager -p '{\"metadata\":{\"finalizers\":null}}'"
     interpreter = ["bash", "-c"]
   }
-  # We need to ignore annotations and labels since Rancher patches this namespace, which 
+  # We need to ignore annotations and labels since Rancher patches this namespace, which
   # confuses terraform.
   lifecycle {
     ignore_changes = [
@@ -119,4 +119,9 @@ resource "helm_release" "cert_manager" {
   chart      = "cert-manager"
   namespace  = "cert-manager"
   values     = var.cert_manager_values_filename != "" ? [file(var.cert_manager_values_filename)] : []
+
+  set {
+    name  = "installCRDs"
+    value = "true"
+  }
 }

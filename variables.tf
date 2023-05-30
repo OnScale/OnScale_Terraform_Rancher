@@ -1,8 +1,3 @@
-variable "vpc_id" {
-  type        = string
-  description = "The VPC ID of the pre-existing VPC."
-}
-
 variable "region" {
   type        = string
   description = "The AWS region."
@@ -21,25 +16,25 @@ variable "subnet_name_filters_for_nodes" {
 variable "node_group_max_size" {
   type        = string
   description = "Max nodes for node group."
-  default     = "1"
+  default     = "3"
 }
 
 variable "node_group_min_size" {
   type        = string
   description = "Min nodes for node group."
-  default     = "1"
+  default     = "3"
 }
 
 variable "node_group_desired_capacity" {
   type        = string
   description = "Desired nodes for node group."
-  default     = "1"
+  default     = "3"
 }
 
 variable "node_group_instance_type" {
   type        = string
   description = "Node instance type."
-  default     = "m5.large"
+  default     = "t3a.xlarge"
 }
 
 variable "base_domain" {
@@ -50,7 +45,6 @@ variable "base_domain" {
 variable "cluster_name" {
   type        = string
   description = "The EKS cluster name. Name is auto generated as 'rancher-rAnDomChARs' if empty"
-  default     = ""
 }
 
 variable "shell_interpreter" {
@@ -99,12 +93,6 @@ variable "cert_manager_letsencrypt_email" {
 variable "rancher_version" {
   type        = string
   description = "Rancher version"
-}
-
-variable "rancher_values_filename" {
-  type        = string
-  description = "Filename for the Helm values YAML file for rancher"
-  default     = ""
 }
 
 variable "rancher_admin_password" {
