@@ -3,16 +3,6 @@ variable "region" {
   description = "The AWS region."
 }
 
-variable "subnet_name_filters_for_cluster" {
-  type        = list(string)
-  description = "The filters to be used on the subnet names to select the subnets to use for the cluster."
-}
-
-variable "subnet_name_filters_for_nodes" {
-  type        = list(string)
-  description = "The filters to be used on the subnet names to select the subnets to use for the nodes."
-}
-
 variable "node_group_max_size" {
   type        = string
   description = "Max nodes for node group."

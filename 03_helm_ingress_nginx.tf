@@ -18,13 +18,13 @@ data "kubernetes_service" "ingress_nginx_service" {
   }
 }
 
-data "aws_route53_zone" "dns_zone" {
+resource "aws_route53_zone" "dns_zone" {
   name = var.base_domain
 }
 
 resource "aws_route53_record" "rancher_cluster_ingress" {
   depends_on = [data.kubernetes_service.ingress_nginx_service]
-  zone_id    = data.aws_route53_zone.dns_zone.zone_id
+  zone_id    = aws_route53_zone.dns_zone.zone_id
   name       = local.full_domain
   type       = "CNAME"
   records    = [data.kubernetes_service.ingress_nginx_service.status.0.load_balancer.0.ingress.0.hostname]

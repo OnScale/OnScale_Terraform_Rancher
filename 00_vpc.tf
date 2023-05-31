@@ -1,22 +1,28 @@
 data "aws_availability_zones" "available" {}
 
+resource "aws_eip" "egress" {
+  count = 1
+  vpc   = true
+}
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.14.0"
 
   name            = "${local.cluster_name}-vpc"
-  cidr            = "10.0.0.0/8"
+  cidr            = "10.0.0.0/16"
   azs             = data.aws_availability_zones.available.names
-  private_subnets = ["10.1.0.0/16", "10.2.0.0/16", "10.3.0.0/16"] # 65534 addresses each
-  public_subnets  = ["10.4.0.0/16", "10.5.0.0/16", "10.6.0.0/16"] # 65534 addresses each
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
   # For control plane
-  intra_subnets = ["10.7.1.0/28", "10.7.1.16/28", "10.7.1.32/28"] # 15 addresses each
+  intra_subnets = ["10.0.7.0/24", "10.0.8.0/24", "10.0.9.0/24"]
   # NAT Gateway will allow instances in private subnets to connect to the internet
   enable_nat_gateway = true
   # We will have a single, fixed, public IP for egress traffic, like on AKS
   # This will help when allowing connections to registries/artifactory.
   single_nat_gateway = true
   reuse_nat_ips      = true
+  external_nat_ip_ids = aws_eip.egress.*.id
   # Assign public DNS hostnames to instances with public IP addresses.
   enable_dns_hostnames = true
 
