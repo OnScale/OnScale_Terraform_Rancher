@@ -95,7 +95,7 @@ resource "kubernetes_job" "prepare_cert_manager" {
               "kubectl",
               "apply",
               "-f",
-              "https://github.com/jetstack/cert-manager/releases/download/${var.cert_manager_version}/cert-manager.crds.yaml",
+              "https://github.com/jetstack/cert-manager/releases/download/v${var.cert_manager_version}/cert-manager.crds.yaml",
               "||",
               "sleep 3600"
             ])

@@ -33,7 +33,7 @@ The following are required:
 * AWS credentials to create EKS clusters, and manage CNAMEs on a Route53 Hosted Zone, etc
 * Terraform v0.13+
 * Pre-existing VPC, subnets, internet gateway, routes etc (if you don't have a VPC your can add one using the module [terraform-aws-modules/terraform-aws-vpc](https://github.com/terraform-aws-modules/terraform-aws-vpc), see [here](https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/examples/basic/main.tf) for an example)
-* A pre-existing Route53 Hosted Zone 
+* A pre-existing Route53 Hosted Zone
 * A version of `kubectl` on the command line (must be suitable for the EKS version you choose)
 * A version of `curl` available on the command line
 
@@ -71,7 +71,7 @@ base_domain | `string` | none | The domain of the existing Route53 Hosted Zone t
 cert_manager_letsencrypt_email | `string` | none | Let's Encrypt email address for expiration notices | `"you@example.com"`
 cert_manager_letsencrypt_environment | `string` | none | Let's Encrypt environment type, must be `"staging"` or `"production"` | `"production"`
 cert_manager_values_filename | `string` | `""` | YAML file for values for `cert-manager` Helm chart | `"values.yaml"`
-cert_manager_version | `string` | none | `cert-manager` Helm chart version to use | `"v1.1.0"`
+cert_manager_version | `string` | none | `cert-manager` Helm chart version to use | `"1.1.0"`
 cluster_name | `string` | "" | The EKS cluster name. Name is auto generated as 'rancher-rAnDomChARs' if empty | `"rancher-dev"`
 ingress_nginx_values_filename | `string` | `"${path.module}/helm-values/ingress-nginx-values.yaml"` | YAML file for values for `ingress-nginx` Helm chart | `"values.yaml"`
 ingress_nginx_version | `string` | none | `ingress-nginx` Helm chart version to use | `"3.12.0"`

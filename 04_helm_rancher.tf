@@ -38,13 +38,8 @@ resource "helm_release" "rancher" {
   }
 
   set {
-    name  = "resources.requests.cpu"
-    value = "1500m"
-  }
-
-  set {
-    name  = "resources.requests.memory"
-    value = "6Gi"
+    name = "global.cattle.psp.enabled"
+    value = "false"
   }
 
 }
